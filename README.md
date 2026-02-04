@@ -1,6 +1,6 @@
 # CLI MCP Mapper
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/SteffenBlake/cli-mcp-mapper/refs/heads/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/cli-mcp-mapper.svg)](https://www.npmjs.com/package/cli-mcp-mapper)
 
 **Transform any CLI command into a Model Context Protocol (MCP) tool with simple JSON configuration.**
@@ -66,22 +66,16 @@ The Model Context Protocol (MCP) enables AI assistants to interact with external
 
 ## Installation
 
-Install CLI MCP Mapper globally from GitHub:
+Install CLI MCP Mapper globally from NPM:
 
 ```bash
-npm install -g git+https://github.com/SteffenBlake/cli-mcp-mapper.git
-```
-
-Or install from npm (once published):
-
-```bash
-npm install -g cli-mcp-mapper
+npm i -g cli-mcp-mapper
 ```
 
 Verify the installation:
 
 ```bash
-cli-mcp-mapper --version
+which cli-mcp-mapper
 ```
 
 ## Configuration
