@@ -1,0 +1,22 @@
+{
+  "name": "cli-mcp-mapper",
+  "version": "1.0.0",
+  "description": "mcp server for mapping cli commands to mcp tools",
+  "homepage": "https://github.com/SteffenBlake/cli-mcp-mapper#readme",
+  "bugs": {
+    "url": "https://github.com/SteffenBlake/cli-mcp-mapper/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteffenBlake/cli-mcp-mapper.git"
+  },
+  "license": "MIT",
+  "author": "SteffenBlake",
+  "bin": {
+    "cli-whitelist-mcp": "./index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.3"
+  }
+}
