@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/SteffenBlake/cli-mcp-mapper/commands.schema.json",
+  "title": "CLI MCP Mapper Commands Schema",
+  "description": "Schema for defining CLI commands to be exposed as MCP tools",
+  "type": "object",
+  "required": ["commands"],
+  "properties": {
+    "commands": {
+      "type": "object",
+      "description": "Map of command names to command definitions",
+      "additionalProperties": {
+        "$ref": "#/definitions/command"
+      }
+    }
+  },
+  "definitions": {
+    "command": {
+      "type": "object",
+      "required": ["description", "command"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of what the command does"
+        },
+        "command": {
+          "type": "string",
+          "description": "The base command to execute (e.g., 'git', 'ls', 'dotnet')"
+        },
+        "baseArgs": {
+          "type": "array",
+          "description": "Static arguments that are always passed to the command",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Map of parameter names to parameter definitions",
+          "additionalProperties": {
+            "$ref": "#/definitions/parameter"
+          },
+          "default": {}
+        }
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "required": ["type", "description"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["string", "boolean", "number"],
+          "description": "The data type of the parameter"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the parameter"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Whether the parameter is required",
+          "default": false
+        },
+        "position": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Position for positional arguments (0-based). If set, the parameter is passed by position rather than by name"
+        },
+        "argName": {
+          "type": "string",
+          "description": "The argument name/flag to use (e.g., '--output', '-v'). Not used for positional parameters"
+        },
+        "argValue": {
+          "type": "string",
+          "description": "Static value to pass after argName for boolean flags (rarely used)"
+        },
+        "enum": {
+          "type": "array",
+          "description": "List of allowed values for the parameter",
+          "items": {
+            "type": "string"
+          }
+        },
+        "default": {
+          "description": "Default value for the parameter if not provided"
+        }
+      }
+    }
+  }
+}

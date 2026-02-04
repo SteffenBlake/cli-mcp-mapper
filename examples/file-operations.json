@@ -1,0 +1,208 @@
+{
+  "$schema": "../commands.schema.json",
+  "commands": {
+    "cp": {
+      "description": "Copy files and directories",
+      "command": "cp",
+      "baseArgs": [],
+      "parameters": {
+        "source": {
+          "type": "string",
+          "description": "Source file or directory",
+          "required": true,
+          "position": 0
+        },
+        "destination": {
+          "type": "string",
+          "description": "Destination path",
+          "required": true,
+          "position": 1
+        },
+        "recursive": {
+          "type": "boolean",
+          "description": "Copy directories recursively",
+          "argName": "-r"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Explain what is being done",
+          "argName": "-v"
+        },
+        "force": {
+          "type": "boolean",
+          "description": "Force copy, overwriting existing files",
+          "argName": "-f"
+        }
+      }
+    },
+    "mv": {
+      "description": "Move or rename files and directories",
+      "command": "mv",
+      "baseArgs": [],
+      "parameters": {
+        "source": {
+          "type": "string",
+          "description": "Source file or directory",
+          "required": true,
+          "position": 0
+        },
+        "destination": {
+          "type": "string",
+          "description": "Destination path",
+          "required": true,
+          "position": 1
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Explain what is being done",
+          "argName": "-v"
+        },
+        "force": {
+          "type": "boolean",
+          "description": "Force move, overwriting existing files",
+          "argName": "-f"
+        }
+      }
+    },
+    "touch": {
+      "description": "Create an empty file or update file timestamp",
+      "command": "touch",
+      "baseArgs": [],
+      "parameters": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the file to create or touch",
+          "required": true,
+          "position": 0
+        }
+      }
+    },
+    "chmod": {
+      "description": "Change file permissions",
+      "command": "chmod",
+      "baseArgs": [],
+      "parameters": {
+        "mode": {
+          "type": "string",
+          "description": "Permission mode (e.g., '755', '+x', 'u+rw')",
+          "required": true,
+          "position": 0
+        },
+        "file_path": {
+          "type": "string",
+          "description": "Path to the file or directory",
+          "required": true,
+          "position": 1
+        },
+        "recursive": {
+          "type": "boolean",
+          "description": "Change permissions recursively",
+          "argName": "-R"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Output a diagnostic for every file processed",
+          "argName": "-v"
+        }
+      }
+    },
+    "chown": {
+      "description": "Change file owner and group",
+      "command": "chown",
+      "baseArgs": [],
+      "parameters": {
+        "owner": {
+          "type": "string",
+          "description": "New owner (user:group format)",
+          "required": true,
+          "position": 0
+        },
+        "file_path": {
+          "type": "string",
+          "description": "Path to the file or directory",
+          "required": true,
+          "position": 1
+        },
+        "recursive": {
+          "type": "boolean",
+          "description": "Change ownership recursively",
+          "argName": "-R"
+        }
+      }
+    },
+    "tar_create": {
+      "description": "Create a tar archive",
+      "command": "tar",
+      "baseArgs": ["-czf"],
+      "parameters": {
+        "archive_name": {
+          "type": "string",
+          "description": "Name of the archive file to create",
+          "required": true,
+          "position": 0
+        },
+        "source_path": {
+          "type": "string",
+          "description": "Path to files/directories to archive",
+          "required": true,
+          "position": 1
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Verbosely list files processed",
+          "argName": "-v"
+        }
+      }
+    },
+    "tar_extract": {
+      "description": "Extract a tar archive",
+      "command": "tar",
+      "baseArgs": ["-xzf"],
+      "parameters": {
+        "archive_name": {
+          "type": "string",
+          "description": "Name of the archive file to extract",
+          "required": true,
+          "position": 0
+        },
+        "destination": {
+          "type": "string",
+          "description": "Directory to extract into",
+          "argName": "-C"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Verbosely list files processed",
+          "argName": "-v"
+        }
+      }
+    },
+    "wc": {
+      "description": "Count lines, words, and bytes in files",
+      "command": "wc",
+      "baseArgs": [],
+      "parameters": {
+        "file_path": {
+          "type": "string",
+          "description": "File to analyze",
+          "position": 0
+        },
+        "lines": {
+          "type": "boolean",
+          "description": "Count lines only",
+          "argName": "-l"
+        },
+        "words": {
+          "type": "boolean",
+          "description": "Count words only",
+          "argName": "-w"
+        },
+        "bytes": {
+          "type": "boolean",
+          "description": "Count bytes only",
+          "argName": "-c"
+        }
+      }
+    }
+  }
+}
