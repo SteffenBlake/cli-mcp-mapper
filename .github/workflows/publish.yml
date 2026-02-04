@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Get version from package.json
@@ -50,8 +50,6 @@ jobs:
           git push origin "v$VERSION"
           echo "✅ Created and pushed tag v$VERSION"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Publish to NPM
-        run: npm publish --provenance --access public
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm publish
