@@ -15,7 +15,7 @@ const config = JSON.parse(await readFile(configPath, "utf-8"));
 
 const server = new Server(
   {
-    name: "cli-whitelist-mcp",
+    name: "cli-mcp-mapper",
     version: "1.0.0",
   },
   {
