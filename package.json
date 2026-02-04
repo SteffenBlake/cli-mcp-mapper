@@ -1,6 +1,6 @@
 {
   "name": "cli-mcp-mapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "mcp server for mapping cli commands to mcp tools",
   "homepage": "https://github.com/SteffenBlake/cli-mcp-mapper#readme",
   "bugs": {
