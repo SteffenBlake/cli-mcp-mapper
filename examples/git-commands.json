@@ -1,0 +1,198 @@
+{
+  "$schema": "../commands.schema.json",
+  "commands": {
+    "git_status": {
+      "description": "Show the working tree status",
+      "command": "git",
+      "baseArgs": ["status"],
+      "parameters": {
+        "short": {
+          "type": "boolean",
+          "description": "Give output in short format",
+          "argName": "-s"
+        },
+        "branch": {
+          "type": "boolean",
+          "description": "Show branch information",
+          "argName": "-b"
+        }
+      }
+    },
+    "git_diff": {
+      "description": "Show changes between commits, commit and working tree, etc",
+      "command": "git",
+      "baseArgs": ["diff"],
+      "parameters": {
+        "staged": {
+          "type": "boolean",
+          "description": "Show staged changes (--cached)",
+          "argName": "--cached"
+        },
+        "file_path": {
+          "type": "string",
+          "description": "Show changes for specific file",
+          "position": 0
+        }
+      }
+    },
+    "git_log": {
+      "description": "Show commit logs",
+      "command": "git",
+      "baseArgs": ["log"],
+      "parameters": {
+        "max_count": {
+          "type": "number",
+          "description": "Limit the number of commits to show",
+          "argName": "-n"
+        },
+        "oneline": {
+          "type": "boolean",
+          "description": "Show each commit on a single line",
+          "argName": "--oneline"
+        },
+        "graph": {
+          "type": "boolean",
+          "description": "Draw a text-based graph of commits",
+          "argName": "--graph"
+        }
+      }
+    },
+    "git_current_branch": {
+      "description": "Get the name of the current git branch",
+      "command": "git",
+      "baseArgs": ["branch", "--show-current"],
+      "parameters": {}
+    },
+    "git_checkout": {
+      "description": "Switch branches or restore working tree files",
+      "command": "git",
+      "baseArgs": ["checkout"],
+      "parameters": {
+        "branch_or_file": {
+          "type": "string",
+          "description": "Branch name or file path",
+          "required": true,
+          "position": 0
+        },
+        "create_branch": {
+          "type": "boolean",
+          "description": "Create a new branch",
+          "argName": "-b"
+        }
+      }
+    },
+    "git_add": {
+      "description": "Add file contents to the staging area",
+      "command": "git",
+      "baseArgs": ["add"],
+      "parameters": {
+        "path": {
+          "type": "string",
+          "description": "Files or directories to add (use '.' for all)",
+          "required": true,
+          "position": 0
+        },
+        "all": {
+          "type": "boolean",
+          "description": "Add all changes (new, modified, deleted)",
+          "argName": "-A"
+        }
+      }
+    },
+    "git_commit": {
+      "description": "Record changes to the repository",
+      "command": "git",
+      "baseArgs": ["commit"],
+      "parameters": {
+        "message": {
+          "type": "string",
+          "description": "Commit message",
+          "required": true,
+          "argName": "-m"
+        },
+        "all": {
+          "type": "boolean",
+          "description": "Automatically stage modified and deleted files",
+          "argName": "-a"
+        },
+        "amend": {
+          "type": "boolean",
+          "description": "Amend the previous commit",
+          "argName": "--amend"
+        }
+      }
+    },
+    "git_push": {
+      "description": "Update remote refs along with associated objects",
+      "command": "git",
+      "baseArgs": ["push"],
+      "parameters": {
+        "remote": {
+          "type": "string",
+          "description": "Remote repository name (default: origin)",
+          "position": 0
+        },
+        "branch": {
+          "type": "string",
+          "description": "Branch to push",
+          "position": 1
+        },
+        "force": {
+          "type": "boolean",
+          "description": "Force push (use with caution)",
+          "argName": "--force"
+        },
+        "set_upstream": {
+          "type": "boolean",
+          "description": "Set upstream for the branch",
+          "argName": "-u"
+        }
+      }
+    },
+    "git_pull": {
+      "description": "Fetch from and integrate with another repository or local branch",
+      "command": "git",
+      "baseArgs": ["pull"],
+      "parameters": {
+        "remote": {
+          "type": "string",
+          "description": "Remote repository name (default: origin)",
+          "position": 0
+        },
+        "branch": {
+          "type": "string",
+          "description": "Branch to pull",
+          "position": 1
+        },
+        "rebase": {
+          "type": "boolean",
+          "description": "Rebase instead of merge",
+          "argName": "--rebase"
+        }
+      }
+    },
+    "git_clone": {
+      "description": "Clone a repository into a new directory",
+      "command": "git",
+      "baseArgs": ["clone"],
+      "parameters": {
+        "repository": {
+          "type": "string",
+          "description": "Repository URL to clone",
+          "required": true,
+          "position": 0
+        },
+        "directory": {
+          "type": "string",
+          "description": "Directory to clone into",
+          "position": 1
+        },
+        "depth": {
+          "type": "number",
+          "description": "Create a shallow clone with specified depth",
+          "argName": "--depth"
+        }
+      }
+    }
+  }
+}

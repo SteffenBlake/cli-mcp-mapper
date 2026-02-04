@@ -1,0 +1,189 @@
+{
+  "$schema": "../commands.schema.json",
+  "commands": {
+    "ls": {
+      "description": "List directory contents",
+      "command": "ls",
+      "baseArgs": ["-lah"],
+      "parameters": {
+        "path": {
+          "type": "string",
+          "description": "Path to directory or file (optional, uses current directory if omitted)",
+          "position": 0
+        },
+        "recursive": {
+          "type": "boolean",
+          "description": "List subdirectories recursively",
+          "argName": "-R"
+        },
+        "sort_by_time": {
+          "type": "boolean",
+          "description": "Sort by modification time, newest first",
+          "argName": "-t"
+        },
+        "sort_by_size": {
+          "type": "boolean",
+          "description": "Sort by file size, largest first",
+          "argName": "-S"
+        }
+      }
+    },
+    "cat": {
+      "description": "Display contents of a file",
+      "command": "cat",
+      "baseArgs": [],
+      "parameters": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the file to display",
+          "required": true,
+          "position": 0
+        },
+        "show_line_numbers": {
+          "type": "boolean",
+          "description": "Show line numbers",
+          "argName": "-n"
+        }
+      }
+    },
+    "mkdir": {
+      "description": "Create a new directory",
+      "command": "mkdir",
+      "baseArgs": [],
+      "parameters": {
+        "directory_path": {
+          "type": "string",
+          "description": "Path to the directory to create",
+          "required": true,
+          "position": 0
+        },
+        "parents": {
+          "type": "boolean",
+          "description": "Create parent directories as needed",
+          "argName": "-p"
+        },
+        "verbose": {
+          "type": "boolean",
+          "description": "Print a message for each created directory",
+          "argName": "-v"
+        }
+      }
+    },
+    "delete_file": {
+      "description": "Delete a file",
+      "command": "rm",
+      "baseArgs": ["-v"],
+      "parameters": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the file to delete",
+          "required": true,
+          "position": 0
+        },
+        "force": {
+          "type": "boolean",
+          "description": "Force deletion without prompting",
+          "argName": "-f"
+        }
+      }
+    },
+    "delete_directory": {
+      "description": "Delete a directory and its contents",
+      "command": "rm",
+      "baseArgs": ["-rv"],
+      "parameters": {
+        "directory_path": {
+          "type": "string",
+          "description": "Path to the directory to delete",
+          "required": true,
+          "position": 0
+        },
+        "force": {
+          "type": "boolean",
+          "description": "Force deletion without prompting",
+          "argName": "-f"
+        }
+      }
+    },
+    "pwd": {
+      "description": "Print the current working directory",
+      "command": "pwd",
+      "baseArgs": [],
+      "parameters": {}
+    },
+    "echo": {
+      "description": "Display a line of text",
+      "command": "echo",
+      "baseArgs": [],
+      "parameters": {
+        "text": {
+          "type": "string",
+          "description": "Text to display",
+          "required": true,
+          "position": 0
+        },
+        "no_newline": {
+          "type": "boolean",
+          "description": "Do not output the trailing newline",
+          "argName": "-n"
+        }
+      }
+    },
+    "find": {
+      "description": "Search for files in a directory hierarchy",
+      "command": "find",
+      "baseArgs": [],
+      "parameters": {
+        "path": {
+          "type": "string",
+          "description": "Starting directory for search (optional, uses current directory if omitted)",
+          "position": 0
+        },
+        "name": {
+          "type": "string",
+          "description": "File name pattern to match",
+          "argName": "-name"
+        },
+        "type": {
+          "type": "string",
+          "description": "File type (f for file, d for directory)",
+          "enum": ["f", "d", "l"],
+          "argName": "-type"
+        }
+      }
+    },
+    "grep": {
+      "description": "Search for a pattern in files",
+      "command": "grep",
+      "baseArgs": [],
+      "parameters": {
+        "pattern": {
+          "type": "string",
+          "description": "Pattern to search for",
+          "required": true,
+          "position": 0
+        },
+        "file_path": {
+          "type": "string",
+          "description": "File to search in (optional, reads from stdin if omitted)",
+          "position": 1
+        },
+        "ignore_case": {
+          "type": "boolean",
+          "description": "Ignore case distinctions",
+          "argName": "-i"
+        },
+        "recursive": {
+          "type": "boolean",
+          "description": "Search recursively in directories",
+          "argName": "-r"
+        },
+        "line_number": {
+          "type": "boolean",
+          "description": "Show line numbers",
+          "argName": "-n"
+        }
+      }
+    }
+  }
+}
