@@ -20,7 +20,10 @@ const server = new Server(
   },
   {
     capabilities: {
-      tools: {},
+      tools: Object.keys(config.commands).reduce((acc, name) => {
+        acc[name] = true;
+        return acc;
+      }, {}),
     },
   }
 );
