@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "SteffenBlake",
   "bin": {
-    "cli-whitelist-mcp": "./index.js"
+    "cli-mcp-mapper": "./index.js"
   },
   "type": "module",
   "dependencies": {
