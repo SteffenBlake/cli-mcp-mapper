@@ -2,6 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/SteffenBlake/cli-mcp-mapper/refs/heads/main/LICENSE)
 [![npm version](https://img.shields.io/npm/v/cli-mcp-mapper.svg)](https://www.npmjs.com/package/cli-mcp-mapper)
+[![CI](https://github.com/SteffenBlake/cli-mcp-mapper/actions/workflows/ci.yml/badge.svg)](https://github.com/SteffenBlake/cli-mcp-mapper/actions/workflows/ci.yml)
 
 **Transform any CLI command into a Model Context Protocol (MCP) tool with simple JSON configuration.**
 
@@ -622,26 +623,34 @@ jq -s '{"commands": (map(.commands) | add)}' \
 
 ⚠️ **Important Security Notes:**
 
-1. **Command Injection Risk**: CLI MCP Mapper executes real system commands. Only expose commands you trust.
+1. **Command Injection Protection**: CLI MCP Mapper uses Node.js `spawn` without shell interpretation to prevent command injection attacks. While we have comprehensive tests to validate this protection, **you should always run agents with shell access in containerized or sandboxed environments** (e.g., Docker, VM, or other isolation mechanisms) to minimize potential security risks. This provides an additional layer of defense in case of unforeseen vulnerabilities.
 
-2. **Access Control**: MCP clients that connect to CLI MCP Mapper will have the same permissions as the user running it.
+2. **Containerization Best Practice**: When deploying CLI MCP Mapper in production or exposing it to AI agents, strongly consider running it within:
+   - Docker containers with limited privileges
+   - Virtual machines with restricted network access  
+   - Sandboxed environments with filesystem restrictions
+   - Isolated user accounts with minimal permissions
 
-3. **Validate Parameters**: Use `enum` to restrict parameter values when possible.
+3. **Access Control**: MCP clients that connect to CLI MCP Mapper will have the same permissions as the user running it. Run the server with the least privileged user account necessary.
 
-4. **Avoid Dangerous Commands**: Be cautious about exposing commands like:
+4. **Validate Parameters**: Use `enum` to restrict parameter values when possible to prevent unexpected inputs.
+
+5. **Avoid Dangerous Commands**: Be cautious about exposing commands like:
    - `rm -rf` without proper constraints
    - `chmod` with unrestricted modes
    - Commands that can execute arbitrary code
    - Network commands that could expose sensitive data
+   - System administration commands
 
-5. **Read-Only Operations**: Consider starting with read-only commands (ls, cat, git status) before exposing write operations.
+6. **Read-Only Operations**: Consider starting with read-only commands (ls, cat, git status) before exposing write operations.
 
-6. **Configuration Security**:
+7. **Configuration Security**:
    - Don't commit sensitive configurations to version control
    - Use environment-specific configuration files
    - Review configurations before deploying
+   - Regularly audit which commands are exposed
 
-7. **Least Privilege**: Only grant the minimum necessary commands for your use case.
+8. **Least Privilege**: Only grant the minimum necessary commands for your use case.
 
 **Best Practices:**
 
