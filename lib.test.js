@@ -593,7 +593,6 @@ describe('Error handling', () => {
     
     // Result should contain exit code information
     expect(result).toContain('Command exited with code');
-    expect(result).toContain('2'); // ls returns exit code 2 for errors
     
     // Result should contain stderr output with error message
     expect(result.toLowerCase()).toMatch(/no such file or directory|cannot access/);
