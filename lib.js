@@ -86,7 +86,10 @@ export function executeCommand(cmdArray) {
     
     proc.on("close", (code) => {
       if (code !== 0) {
-        reject(new Error(`Command failed with code ${code}\n${stderr}`));
+        // Resolve with full output instead of rejecting
+        // This allows MCP SDK clients to see the actual error details
+        const output = `Command exited with code ${code}\n${stdout}${stderr}`;
+        resolve(output);
       } else {
         resolve(stdout || stderr);
       }

@@ -560,10 +560,12 @@ describe('Command Injection Security Tests', () => {
 });
 
 describe('Error handling', () => {
-  it('should reject when command fails', async () => {
+  it('should resolve with exit code info when command fails', async () => {
     const cmd = ['false']; // 'false' command always returns exit code 1
     
-    await expect(executeCommand(cmd)).rejects.toThrow('Command failed with code 1');
+    const result = await executeCommand(cmd);
+    expect(result).toContain('Command exited with code');
+    expect(result).toContain('1');
   });
   
   it('should reject when command does not exist', async () => {
@@ -572,11 +574,29 @@ describe('Error handling', () => {
     await expect(executeCommand(cmd)).rejects.toThrow('Failed to execute command');
   });
   
-  it('should capture stderr on failure', async () => {
+  it('should resolve with stderr content on failure', async () => {
     // Use a command that writes to stderr
     const cmd = ['ls', '/this/path/does/not/exist/12345'];
     
-    await expect(executeCommand(cmd)).rejects.toThrow();
+    const result = await executeCommand(cmd);
+    expect(result).toContain('Command exited with code');
+    expect(result.toLowerCase()).toMatch(/no such file or directory|cannot access/);
+  });
+  
+  it('should resolve with full output including stderr when command fails with non-zero exit code', async () => {
+    // Use a command that will fail and output to stderr
+    // This command tries to list a non-existent directory
+    const cmd = ['ls', '/this/path/does/not/exist/for/testing/12345'];
+    
+    // The promise should resolve (not reject) with the full output
+    const result = await executeCommand(cmd);
+    
+    // Result should contain exit code information
+    expect(result).toContain('Command exited with code');
+    expect(result).toContain('2'); // ls returns exit code 2 for errors
+    
+    // Result should contain stderr output with error message
+    expect(result.toLowerCase()).toMatch(/no such file or directory|cannot access/);
   });
 });
 
