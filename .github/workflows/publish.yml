@@ -41,6 +41,9 @@ jobs:
             echo "✅ Tag v$VERSION does not exist, proceeding..."
           fi
 
+      - run: npm ci
+      - run: npm test
+      
       - name: Create and push tag
         run: |
           VERSION=${{ steps.package-version.outputs.version }}
@@ -50,6 +53,5 @@ jobs:
           git push origin "v$VERSION"
           echo "✅ Created and pushed tag v$VERSION"
 
-      - run: npm ci
       - run: npm run build --if-present
       - run: npm publish
