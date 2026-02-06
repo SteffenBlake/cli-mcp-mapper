@@ -17,6 +17,7 @@ CLI MCP Mapper is a powerful MCP server that dynamically exposes command-line to
   - [Environment Variable](#environment-variable)
   - [Default Location](#default-location)
   - [Configuration File Format](#configuration-file-format)
+  - [Validating Configuration (Dry-Run)](#validating-configuration-dry-run)
 - [JSON Specification](#json-specification)
   - [Schema Reference](#schema-reference)
   - [Command Definition](#command-definition)
@@ -61,6 +62,7 @@ The Model Context Protocol (MCP) enables AI assistants to interact with external
 🎯 **Flexible Parameters**: Supports positional args, named flags, booleans, enums, and required/optional parameters  
 📝 **Type System**: String, boolean, and number parameter types with validation  
 🔒 **Schema Validation**: JSON schema for validating your command configurations  
+✅ **Configuration Validation**: Built-in dry-run mode to verify configurations before deployment  
 🚀 **Zero Dependencies**: Minimal runtime footprint (only @modelcontextprotocol/sdk)  
 🔧 **Easy Configuration**: Environment variable or default path configuration  
 📚 **Rich Examples**: Comprehensive example configurations included  
@@ -167,6 +169,93 @@ The configuration file is a JSON object with a single `commands` property contai
   }
 }
 ```
+
+### Validating Configuration (Dry-Run)
+
+Before deploying CLI MCP Mapper in production or in CI/CD pipelines, you can validate your configuration file using the `--dry-run` flag. This performs a "flight check" by loading and parsing your configuration without starting the MCP server.
+
+**Basic Usage:**
+
+```bash
+cli-mcp-mapper --dry-run
+```
+
+**With Custom Configuration Path:**
+
+```bash
+CLI_MCP_MAPPER_CONFIG=/path/to/commands.json cli-mcp-mapper --dry-run
+```
+
+**What Dry-Run Does:**
+
+1. ✅ Loads the configuration file from the specified path
+2. ✅ Validates JSON syntax
+3. ✅ Verifies the configuration structure (presence of `commands` object)
+4. ✅ Validates each command definition (required fields, parameter schemas)
+5. ✅ Exits with appropriate status code (0 for success, 1 for errors)
+6. ✅ Outputs detailed error messages to stderr for debugging
+
+**Example Output (Success):**
+
+```
+Configuration loaded successfully from /home/user/.config/cli-mcp-mapper/commands.json
+Found 9 command(s):
+  ✓ ls: List directory contents
+  ✓ cat: Display contents of a file
+  ✓ mkdir: Create a new directory
+  ✓ echo: Display a line of text
+  ✓ find: Search for files in a directory hierarchy
+  ...
+
+Dry-run completed successfully. Configuration is valid.
+```
+
+**Example Output (Error):**
+
+```
+Error: Configuration file not found at /path/to/commands.json
+Please create a configuration file or set CLI_MCP_MAPPER_CONFIG environment variable.
+```
+
+**Use Cases:**
+
+- **CI/CD Pipelines**: Add validation as a build step to catch configuration errors before deployment
+  ```yaml
+  # In GitHub Actions or similar CI
+  - name: Validate MCP Configuration
+    run: cli-mcp-mapper --dry-run
+    env:
+      CLI_MCP_MAPPER_CONFIG: ./config/commands.json
+  ```
+
+- **Pre-deployment Checks**: Verify configuration files before pushing to production
+  ```bash
+  # In deployment script
+  if ! cli-mcp-mapper --dry-run; then
+    echo "Configuration validation failed!"
+    exit 1
+  fi
+  ```
+
+- **Configuration Development**: Quick validation during configuration file editing
+  ```bash
+  # Edit config and validate immediately
+  vim ~/.config/cli-mcp-mapper/commands.json
+  cli-mcp-mapper --dry-run
+  ```
+
+- **Automated Testing**: Integrate into test suites to ensure configuration integrity
+  ```bash
+  # Test script
+  for config in configs/*.json; do
+    CLI_MCP_MAPPER_CONFIG="$config" cli-mcp-mapper --dry-run || exit 1
+  done
+  ```
+
+**Exit Codes:**
+
+- `0`: Configuration is valid and ready to use
+- `1`: Configuration error (missing file, invalid JSON, structural issues)
 
 ## JSON Specification
 
